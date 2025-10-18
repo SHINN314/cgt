@@ -1,0 +1,23 @@
+{
+  // .pyファイルの設定
+  "[python]": {
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit",
+      "source.organizeImports": "explicit"
+    },
+    "editor.defaultFormatter": "charliermarsh.ruff"
+  },
+  "ruff.format.preview": false,
+  "ruff.lint.select": ["ALL"],
+  "ruff.lint.extendSelect": ["ALL"],
+  "ruff.lint.ignore": [
+    "T201",
+    "D400",
+    "D415",
+    "INP001",
+    "ERA001",
+    "RET504",
+    "D100"
+  ]
+}
