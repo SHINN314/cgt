@@ -10,7 +10,6 @@
   },
   "ruff.format.preview": false,
   "ruff.lint.select": ["ALL"],
-  "ruff.lint.extendSelect": ["ALL"],
   "ruff.lint.ignore": [
     "T201",
     "D400",
