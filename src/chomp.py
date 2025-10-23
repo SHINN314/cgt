@@ -69,6 +69,44 @@ class Chomp:
             raise IndexError(msg)
         return self.board[row][col]
 
+    def get_row_cell_count(self, row: int) -> int:
+        """指定された行の残っているセルの数を取得する。
+
+        Parameters
+        ----------
+        row : int
+            行のインデックス。
+
+        Returns
+        -------
+        int
+            指定された行の残っているセルの数。
+
+        """
+        if row < 0 or row >= self.get_board_rows():
+            msg: str = "行のインデックスが範囲外です"
+            raise IndexError(msg)
+        return len(self.board[row]) - self.board[row].count(False)
+
+    def get_col_cell_count(self, col: int) -> int:
+        """指定された列の残っているセルの数を取得する。
+
+        Parameters
+        ----------
+        col : int
+            列のインデックス。
+
+        Returns
+        -------
+        int
+            指定された列の残っているセルの数。
+
+        """
+        if col < 0 or col >= self.get_board_cols():
+            msg: str = "列のインデックスが範囲外です"
+            raise IndexError(msg)
+        return sum(1 for row in self.board if row[col])
+
     def eat(self, row: int, col: int) -> None:
         """指定された位置から右下の部分を食べる。
 
