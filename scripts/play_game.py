@@ -9,6 +9,10 @@ def play_game() -> None:
     is_first_player: int = 1
 
     while game.is_game_over() is False:
+        if is_first_player:
+            print("第一プレイヤーの番です。")
+        else:
+            print("第二プレイヤーの番です。")
         game.display()
         r: int = int(input("食べる行のインデックスを入力してください: "))
         c: int = int(input("食べる列のインデックスを入力してください: "))
