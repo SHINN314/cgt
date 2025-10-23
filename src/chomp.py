@@ -12,6 +12,52 @@ class Chomp:
         """Chompクラスのコンストラクタ。"""
         self.board = [[True for _ in range(col)] for _ in range(row)]
 
+    def get_board_rows(self) -> int:
+        """盤面の行数を取得する。
+
+        Returns
+        -------
+        int
+            盤面の行数。
+
+        """
+        return len(self.board)
+
+    def get_board_cols(self) -> int:
+        """盤面の列数を取得する。
+
+        Returns
+        -------
+        int
+            盤面の列数。
+
+        """
+        return len(self.board[0]) if self.board else 0
+
+    def get_baord_cell(self, row: int, col: int) -> bool:
+        """指定された位置の盤面の状態を取得する。
+
+        Parameters
+        ----------
+        row : int
+            行のインデックス。
+        col : int
+            列のインデックス。
+
+        Returns
+        -------
+        bool
+            指定された位置が食べられていない場合はTrue、食べられている場合はFalse。
+
+        """
+        if row < 0 or row >= self.get_board_rows():
+            msg: str = "行のインデックスが範囲外です"
+            raise IndexError(msg)
+        if col < 0 or col >= self.get_board_cols():
+            msg: str = "列のインデックスが範囲外です"
+            raise IndexError(msg)
+        return self.board[row][col]
+
     def eat(self, row: int, col: int) -> None:
         """指定された位置から右下の部分を食べる。
 
@@ -40,6 +86,11 @@ class Chomp:
 
     def display(self) -> None:
         """盤面の状態を表示する。"""
-        for row in self.board:
-            print(" ".join(["O" if cell else "X" for cell in row]))
+        # 列のインデックスを表示
+        col_count = len(self.board[0]) if self.board else 0
+        print("   " + " ".join(str(i) for i in range(col_count)))
+
+        # 各行を行インデックスと共に表示
+        for i, row in enumerate(self.board):
+            print(f"{i}: " + " ".join(["O" if cell else "X" for cell in row]))
         print()
