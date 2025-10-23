@@ -69,6 +69,12 @@ class Chomp:
             食べ始める列のインデックス。
 
         """
+        if row < 0 or row >= self.get_board_rows():
+            msg: str = "行のインデックスが範囲外です"
+            raise IndexError(msg)
+        if col < 0 or col >= self.get_board_cols():
+            msg: str = "列のインデックスが範囲外です"
+            raise IndexError(msg)
         for r in range(row, len(self.board)):
             for c in range(col, len(self.board[r])):
                 self.board[r][c] = False
