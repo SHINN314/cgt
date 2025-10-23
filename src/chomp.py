@@ -45,7 +45,7 @@ class Chomp:
         """
         return len(self.board[0]) if self.board else 0
 
-    def get_baord_cell(self, row: int, col: int) -> bool:
+    def get_board_cell(self, row: int, col: int) -> bool:
         """指定された位置の盤面の状態を取得する。
 
         Parameters
