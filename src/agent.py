@@ -37,7 +37,7 @@ class Agent:
         col_weights: list[int] = []
         for r in range(game.get_board_rows()):
             row_weight: int = sum(
-                1 for c in range(game.get_board_cols()) if game.get_baord_cell(r, c)
+                1 for c in range(game.get_board_cols()) if game.get_board_cell(r, c)
             )
             row_weights.append(row_weight)
         for c in range(game.get_board_cols()):
