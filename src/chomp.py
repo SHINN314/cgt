@@ -12,6 +12,17 @@ class Chomp:
         """Chompクラスのコンストラクタ。"""
         self.board = [[True for _ in range(col)] for _ in range(row)]
 
+    def get_board(self) -> list[list[bool]]:
+        """盤面の状態を取得する。
+
+        Returns
+        -------
+        list of list of bool
+            盤面の状態を表す2次元リスト。
+
+        """
+        return self.board
+
     def get_board_rows(self) -> int:
         """盤面の行数を取得する。
 
