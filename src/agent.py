@@ -33,18 +33,12 @@ class Agent:
             選択されたセルの行と列のインデックス。
 
         """
-        row_weights: list[int] = []
-        col_weights: list[int] = []
-        for r in range(game.get_board_rows()):
-            row_weight: int = sum(
-                1 for c in range(game.get_board_cols()) if game.get_board_cell(r, c)
-            )
-            row_weights.append(row_weight)
-        for c in range(game.get_board_cols()):
-            col_weight: int = sum(
-                1 for r in range(game.get_board_rows()) if game.get_board_cell(r, c)
-            )
-            col_weights.append(col_weight)
+        row_weights: list[int] = [
+            game.get_row_cell_count(r) for r in range(game.get_board_rows())
+        ]
+        col_weights: list[int] = [
+            game.get_col_cell_count(c) for c in range(game.get_board_cols())
+        ]
 
         select_row: int = random.choices(
             population=list(range(game.get_board_rows())),
