@@ -139,6 +139,30 @@ class Chomp:
         """
         return not self.board[0][0]
 
+    def is_eatabel_cell(self, row: int, col: int) -> bool:
+        """指定された位置のセルが食べられるかどうかを判定する。
+
+        Parameters
+        ----------
+        row : int
+            行のインデックス。
+        col : int
+            列のインデックス。
+
+        Returns
+        -------
+        bool
+            指定された位置のセルが食べられる場合はTrue、そうでない場合はFalse。
+
+        """
+        if row < 0 or row >= self.get_board_rows():
+            msg: str = "行のインデックスが範囲外です"
+            raise IndexError(msg)
+        if col < 0 or col >= self.get_board_cols():
+            msg: str = "列のインデックスが範囲外です"
+            raise IndexError(msg)
+        return self.board[row][col]
+
     def display(self) -> None:
         """盤面の状態を表示する。"""
         # 列のインデックスを表示
