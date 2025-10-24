@@ -33,14 +33,10 @@ class Agent:
             選択されたセルの行と列のインデックス。
 
         """
-        # 最後のセル(毒チョコ)のみ残っている場合はそれを選択する
-        if game.is_last_cell():
-            return (0, 0)
         valid_cells = [
             (r, c)
             for r in range(game.get_board_rows())
             for c in range(game.get_board_cols())
-            if game.get_board_cell(r, c) and not (r == 0 and c == 0)  # 毒チョコを除外
         ]
         if not valid_cells:
             msg = "No valid cells to select."
