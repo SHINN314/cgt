@@ -139,6 +139,18 @@ class Chomp:
         """
         return not self.board[0][0]
 
+    def is_last_cell(self) -> bool:
+        """盤面に残っているセルが最後の一つかどうかを判定する。
+
+        Returns
+        -------
+        bool
+            盤面に残っているセルが最後の一つの場合はTrue、そうでない場合はFalse。
+
+        """
+        remaining_cells = sum(row.count(True) for row in self.board)
+        return remaining_cells == 1
+
     def display(self) -> None:
         """盤面の状態を表示する。"""
         # 列のインデックスを表示
