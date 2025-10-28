@@ -1,3 +1,5 @@
+import math
+
 import numpy as np
 
 
@@ -31,3 +33,28 @@ def calculate_mutual_recurrence_relation(k: int) -> np.ndarray:
         recurrent_vector = np.dot(operator, recurrent_vector)
 
     return recurrent_vector
+
+
+def calculate_probability(n: int, k: int) -> float:
+    """2行のChompにおいて一様ランダムに手を打ったときの先手の勝率を求める関数。
+
+    Parameters
+    ----------
+    n: int
+        1列目のチョコレートの数。
+    k: int
+        2列目のチョコレートの数。
+
+    Returns
+    -------
+    float
+        先手の勝率。
+
+    """
+    recurrence_relation: np.ndarray = calculate_mutual_recurrence_relation(k)
+    a_k: int = recurrence_relation[0]
+    b_k: int = recurrence_relation[1]
+    winning_probability: float = 0.5 - (n * a_k + b_k) / math.factorial(2 * (k - 1)) * (
+        n + k
+    ) * (n + k - 1) * (n + k - 2)
+    return winning_probability
