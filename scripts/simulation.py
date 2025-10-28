@@ -42,4 +42,4 @@ def simulate_game(simulation_count: int, board_rows: int, board_cols: int) -> No
 
 
 if __name__ == "__main__":
-    simulate_game(simulation_count=10000, board_rows=2, board_cols=1000)
+    simulate_game(simulation_count=1000, board_rows=2, board_cols=1000)
