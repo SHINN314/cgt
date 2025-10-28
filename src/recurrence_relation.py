@@ -23,7 +23,7 @@ def calculate_mutual_recurrence_relation(k: int) -> np.ndarray:
     recurrent_vector[0] = 1
     recurrent_vector[1] = -1
 
-    for i in range(2, k + 1):
+    for i in range(1, k):
         operator = np.array(
             [[i * (4 * i + 1), 1], [-i * (i + 1), 4 * i**2 - i - 1]],
             dtype=int,
