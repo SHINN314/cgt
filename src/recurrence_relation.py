@@ -15,17 +15,17 @@ def calculate_mutual_recurrence_relation(k: int) -> np.ndarray:
         計算された相互再帰関係のリスト。
 
     """
-    if k < 0:
-        msg: str = "kは0以上の整数でなければなりません。"
+    if k < 1:
+        msg: str = "kは1以上の整数でなければなりません。"
         raise ValueError(msg)
 
     recurrent_vector: np.ndarray = np.zeros(2, dtype=int)
     recurrent_vector[0] = 1
     recurrent_vector[1] = -1
 
-    for _ in range(k - 1):
+    for i in range(2, k + 1):
         operator = np.array(
-            [[k * (4 * k + 1), 1], [-k * (k + 1), 4 * k**2 - k - 1]],
+            [[i * (4 * i + 1), 1], [-i * (i + 1), 4 * i**2 - i - 1]],
             dtype=int,
         )
         recurrent_vector = np.dot(operator, recurrent_vector)
