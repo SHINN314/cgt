@@ -31,15 +31,14 @@ class TestCalculateMutualRecurrenceRelation:
         expected = np.array([2576, -3248], dtype=int)
         np.testing.assert_array_equal(result, expected)
 
-    def test_k_equals_0(self) -> None:
-        """k=0の場合のテスト（初期値を返すべき）。"""
-        result = calculate_mutual_recurrence_relation(0)
-        expected = np.array([1, -1], dtype=int)
-        np.testing.assert_array_equal(result, expected)
+    def test_k_equals_0_raises_value_error(self) -> None:
+        """k=0が渡された場合にValueErrorが発生することを確認。"""
+        with pytest.raises(ValueError, match="kは1以上の整数でなければなりません。"):
+            calculate_mutual_recurrence_relation(0)
 
     def test_negative_k_raises_value_error(self) -> None:
         """負のkが渡された場合にValueErrorが発生することを確認。"""
-        with pytest.raises(ValueError, match="kは0以上の整数でなければなりません。"):
+        with pytest.raises(ValueError, match="kは1以上の整数でなければなりません。"):
             calculate_mutual_recurrence_relation(-1)
 
     def test_return_type_is_ndarray(self) -> None:
