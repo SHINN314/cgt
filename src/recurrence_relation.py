@@ -41,9 +41,9 @@ def calculate_probability(n: int, k: int) -> float:
     Parameters
     ----------
     n: int
-        1列目のチョコレートの数。
+        1行目のチョコレートの数。
     k: int
-        2列目のチョコレートの数。
+        2行目のチョコレートの数。
 
     Returns
     -------
