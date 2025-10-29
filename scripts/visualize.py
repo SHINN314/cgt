@@ -28,7 +28,7 @@ def visualize_probability(max_n: int) -> None:
     plt.show()
 
 
-def visualize_probability_3d(max_n: int) -> None:
+def visualize_probability_2d(max_n: int) -> None:
     """2行のChompにおける先手の勝率を2次元で可視化する関数。
 
     2列目のチョコレートの数(k)ごとに異なる色で表示します。
@@ -74,4 +74,4 @@ def visualize_probability_3d(max_n: int) -> None:
 if __name__ == "__main__":
     input_max_n: int = int(input("nの最大値を入力してください: "))
     print("2次元グラフを表示します...")
-    visualize_probability_3d(input_max_n)
+    visualize_probability_2d(input_max_n)
