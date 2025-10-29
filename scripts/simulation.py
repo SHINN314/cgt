@@ -2,7 +2,7 @@ from src.agent import Agent
 from src.chomp import Chomp
 
 
-def simulate_game(simulation_count: int, board_rows: int, board_cols: int) -> None:
+def simulate_game(simulation_count: int, board_rows: int, board_cols: int) -> float:
     """Chompゲームのシミュレーションを実行する関数。
 
     Parameters
@@ -13,6 +13,11 @@ def simulate_game(simulation_count: int, board_rows: int, board_cols: int) -> No
         盤面の行数。
     board_cols : int
         盤面の列数。
+
+    Return
+    ----------
+    probability : float
+        先手の勝率
 
     """
     agent1: Agent = Agent("エージェント1")
@@ -37,8 +42,11 @@ def simulate_game(simulation_count: int, board_rows: int, board_cols: int) -> No
         else:
             agent1_wins += 1
 
-    print(f"エージェント1の勝利数: {agent1_wins}")
-    print(f"エージェント2の勝利数: {agent2_wins}")
+    return agent1_wins / simulation_count
+
+
+def compare_theory_and_simulation() -> None:
+    """理論値とシミュレーション値の違いを視覚的に確認する関数。"""
 
 
 if __name__ == "__main__":
