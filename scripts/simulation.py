@@ -134,7 +134,11 @@ def compare_theory_and_simulation(
     plt.show()
 
 
-def simulate_square_chomp(batch_num: int = 10, simulate_count: int = 10000) -> None:
+def simulate_square_chomp(
+    batch_num: int = 10,
+    simulate_count: int = 10000,
+    file_name: str = "square_chomp_simulation.png",
+) -> None:
     """正方形Chompのシミュレーションを複数回実行し、結果を可視化する関数。
 
     正方形は2✕2に制限してシミュレーションを行う。
@@ -145,6 +149,8 @@ def simulate_square_chomp(batch_num: int = 10, simulate_count: int = 10000) -> N
         シミュレーションバッチの数。
     simulate_count : int
         各バッチでのシミュレーション回数。
+    file_name : str
+        グラフを保存するファイル名。
 
     """
     ns: list[int] = list(range(1, batch_num + 1))
@@ -161,6 +167,7 @@ def simulate_square_chomp(batch_num: int = 10, simulate_count: int = 10000) -> N
     plt.ylabel("First Player Winning Probability")
     plt.ylim(0, 1)
     plt.grid()
+    plt.savefig(RESULT_DIR / file_name)
     plt.show()
 
 
@@ -175,4 +182,11 @@ if __name__ == "__main__":
         )
         or 10000,
     )
-    simulate_square_chomp(batch_num, simulate_count)
+    file_name: str = (
+        input(
+            "グラフを保存するファイル名を入力してください(デフォルト: square_chomp_simulation.png): ",  # noqa: E501
+        )
+        or "square_chomp_simulation.png"
+    )
+
+    simulate_square_chomp(batch_num, simulate_count, file_name)
