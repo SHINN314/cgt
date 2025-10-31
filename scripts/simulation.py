@@ -131,19 +131,42 @@ def compare_theory_and_simulation(
     plt.show()
 
 
+def simulate_square_chomp(batch_num: int, simulate_count: int) -> None:
+    """正方形Chompのシミュレーションを複数回実行し、結果を可視化する関数。
+
+    正方形は2✕2に制限してシミュレーションを行う。
+
+    Parameters
+    ----------
+    batch_num : int
+        シミュレーションバッチの数。
+    simulate_count : int
+        各バッチでのシミュレーション回数。
+
+    """
+    ns: list[int] = list(range(1, batch_num + 1))
+    probabilities: list[float] = [
+        simulate_game(simulation_count=simulate_count, board_rows=n, board_cols=n)
+        for n in range(1, batch_num + 1)
+    ]
+    print(probabilities)  # デバッグ用出力
+
+    plt.figure(figsize=(10, 6))
+    plt.plot(ns, probabilities, marker="o")
+    plt.title("Probability of nxn Chomp - First Player Winning")
+    plt.xlabel("Number of Chocolates in Each Column (n)")
+    plt.ylabel("First Player Winning Probability")
+    plt.ylim(0, 1)
+    plt.grid()
+    plt.show()
+
+
 if __name__ == "__main__":
-    # 使用例
-    input_k: int = int(input("kの値を入力してください (2xi, 1<=i<=kで計算): "))
-    file_name: str = input(
-        "グラフを保存するファイル名を入力してください "
-        "(例: theory_vs_simulation_20250101.png): ",
+    # 正方形盤面でシミュレーション
+    batch_num: int = int(
+        input("シミュレーションのバッチ回数を入力してください: "),
     )
-    input_sim_count: int = int(
-        input("シミュレーション回数を入力してください (デフォルト: 10000): ")
-        or "10000",
+    simulate_count: int = int(
+        input("各バッチでのシミュレーション回数を入力してください: "),
     )
-    compare_theory_and_simulation(
-        k=input_k,
-        simulation_count=input_sim_count,
-        file_name=file_name,
-    )
+    simulate_square_chomp(batch_num, simulate_count)
