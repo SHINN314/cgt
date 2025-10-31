@@ -131,7 +131,7 @@ def compare_theory_and_simulation(
     plt.show()
 
 
-def simulate_square_chomp(batch_num: int, simulate_count: int) -> None:
+def simulate_square_chomp(batch_num: int = 10, simulate_count: int = 10000) -> None:
     """正方形Chompのシミュレーションを複数回実行し、結果を可視化する関数。
 
     正方形は2✕2に制限してシミュレーションを行う。
@@ -164,9 +164,12 @@ def simulate_square_chomp(batch_num: int, simulate_count: int) -> None:
 if __name__ == "__main__":
     # 正方形盤面でシミュレーション
     batch_num: int = int(
-        input("シミュレーションのバッチ回数を入力してください: "),
+        input("シミュレーションのバッチ回数を入力してください(デフォルト: 10): ") or 10,
     )
     simulate_count: int = int(
-        input("各バッチでのシミュレーション回数を入力してください: "),
+        input(
+            "各バッチでのシミュレーション回数を入力してください(デフォルト: 10000): ",
+        )
+        or 10000,
     )
     simulate_square_chomp(batch_num, simulate_count)
