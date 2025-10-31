@@ -51,6 +51,7 @@ def simulate_game(simulation_count: int, board_rows: int, board_cols: int) -> fl
 def compare_theory_and_simulation(
     k: int,
     simulation_count: int = 10000,
+    file_name: str = "theory_vs_simulation.png",
 ) -> None:
     """理論値とシミュレーション値の違いを視覚的に確認する関数。
 
@@ -62,6 +63,8 @@ def compare_theory_and_simulation(
         2列目のチョコレートの最大数
     simulation_count : int, optional
         各盤面でのシミュレーション回数 (デフォルト: 10000)
+    file_name : str
+        グラフを保存するファイル名
 
     """
     if k < 1:
@@ -99,7 +102,7 @@ def compare_theory_and_simulation(
         i_values,
         theory_values,
         marker="o",
-        label="Theory (理論値)",
+        label="Theory",
         linewidth=2,
         markersize=8,
         color="blue",
@@ -109,7 +112,7 @@ def compare_theory_and_simulation(
         i_values,
         simulation_values,
         marker="s",
-        label=f"Simulation (シミュレーション, N={simulation_count})",
+        label=f"Simulation (N={simulation_count})",
         linewidth=2,
         markersize=8,
         color="red",
@@ -123,14 +126,23 @@ def compare_theory_and_simulation(
     plt.grid(visible=True, alpha=0.3)
     plt.ylim(0, 1)
     plt.tight_layout()
+    plt.savefig(file_name)
     plt.show()
 
 
 if __name__ == "__main__":
     # 使用例
     input_k: int = int(input("kの値を入力してください (2xi, 1<=i<=kで計算): "))
+    file_name: str = input(
+        "グラフを保存するファイル名を入力してください "
+        "(例: theory_vs_simulation_20250101.png): ",
+    )
     input_sim_count: int = int(
         input("シミュレーション回数を入力してください (デフォルト: 10000): ")
         or "10000",
     )
-    compare_theory_and_simulation(k=input_k, simulation_count=input_sim_count)
+    compare_theory_and_simulation(
+        k=input_k,
+        simulation_count=input_sim_count,
+        file_name=file_name,
+    )
