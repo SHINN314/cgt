@@ -24,6 +24,9 @@ def simulate_game(simulation_count: int, board_rows: int, board_cols: int) -> fl
         先手の勝率
 
     """
+    print(
+        f"Simulating {simulation_count} games on a {board_rows}x{board_cols} board...",
+    )
     agent1: Agent = Agent("エージェント1")
     agent2: Agent = Agent("エージェント2")
     agent1_wins: int = 0
@@ -146,8 +149,8 @@ def simulate_square_chomp(batch_num: int = 10, simulate_count: int = 10000) -> N
     """
     ns: list[int] = list(range(1, batch_num + 1))
     probabilities: list[float] = [
-        simulate_game(simulation_count=simulate_count, board_rows=n, board_cols=n)
-        for n in range(1, batch_num + 1)
+        simulate_game(simulation_count=simulate_count, board_rows=2, board_cols=2)
+        for _ in range(1, batch_num + 1)
     ]
     print(probabilities)  # デバッグ用出力
 
