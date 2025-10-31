@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 
+from config import RESULT_DIR
 from src.agent import Agent
 from src.chomp import Chomp
 from src.recurrence_relation import calculate_probability
@@ -126,7 +127,7 @@ def compare_theory_and_simulation(
     plt.grid(visible=True, alpha=0.3)
     plt.ylim(0, 1)
     plt.tight_layout()
-    plt.savefig(file_name)
+    plt.savefig(RESULT_DIR / file_name)
     plt.show()
 
 
