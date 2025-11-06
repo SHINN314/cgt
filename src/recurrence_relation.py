@@ -41,9 +41,9 @@ def calculate_probability(n: int, k: int) -> float:
     Parameters
     ----------
     n: int
-        1列目のチョコレートの数。
+        1行目のチョコレートの数。
     k: int
-        2列目のチョコレートの数。
+        2行目のチョコレートの数。
 
     Returns
     -------
@@ -54,7 +54,7 @@ def calculate_probability(n: int, k: int) -> float:
     recurrence_relation: np.ndarray = calculate_mutual_recurrence_relation(k)
     a_k: int = recurrence_relation[0]
     b_k: int = recurrence_relation[1]
-    winning_probability: float = 0.5 - (n * a_k + b_k) / math.factorial(2 * (k - 1)) * (
-        n + k
-    ) * (n + k - 1) * (n + k - 2)
+    winning_probability: float = 0.5 - (n * a_k + b_k) / (
+        math.factorial(2 * (k - 1)) * (n + k) * (n + k - 1) * (n + k - 2)
+    )
     return winning_probability

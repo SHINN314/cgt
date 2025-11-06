@@ -128,18 +128,18 @@ class Chomp:
             for c in range(col, len(self.board[r])):
                 self.board[r][c] = False
 
-    def is_game_over(self) -> bool:
-        """ゲームが終了しているかどうかを判定する。
+    def is_empty_board(self) -> bool:
+        """盤面が空であるかどうかを判定する。
 
         Returns
         -------
         bool
-            ゲームが終了している場合はTrue、そうでない場合はFalse。
+            盤面が空である場合はTrue、そうでない場合はFalse。
 
         """
         return not self.board[0][0]
 
-    def is_eatabel_cell(self, row: int, col: int) -> bool:
+    def is_eatable_cell(self, row: int, col: int) -> bool:
         """指定された位置のセルが食べられるかどうかを判定する。
 
         Parameters
