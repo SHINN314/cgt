@@ -173,20 +173,23 @@ def simulate_square_chomp(
 
 if __name__ == "__main__":
     # 正方形盤面でシミュレーション
-    batch_num: int = int(
-        input("シミュレーションのバッチ回数を入力してください(デフォルト: 10): ") or 10,
+    k: int = int(
+        input("比較する2xi Chompの最大iを入力してください(デフォルト: 10): ") or "10",
     )
-    simulate_count: int = int(
-        input(
-            "各バッチでのシミュレーション回数を入力してください(デフォルト: 10000): ",
-        )
-        or 10000,
-    )
-    file_name: str = (
-        input(
-            "グラフを保存するファイル名を入力してください(デフォルト: square_chomp_simulation.png): ",  # noqa: E501
-        )
-        or "square_chomp_simulation.png"
+    simulation_count: int = int(
+        input("各盤面でのシミュレーション回数を入力してください(デフォルト: 10000): ")
+        or "10000",
     )
 
-    simulate_square_chomp(batch_num, simulate_count, file_name)
+    file_name: str = (
+        input(
+            "グラフを保存するファイル名を入力してください(デフォルト: theory_vs_simulation.png): ",  # noqa: E501
+        )
+        or "theory_vs_simulation.png"
+    )
+
+    compare_theory_and_simulation(
+        k=k,
+        simulation_count=simulation_count,
+        file_name=file_name,
+    )
