@@ -37,7 +37,7 @@ class Agent:
             (r, c)
             for r in range(game.get_board_rows())
             for c in range(game.get_board_cols())
-            if game.is_eatabel_cell(r, c)
+            if game.is_eatable_cell(r, c)
         ]
         if not valid_cells:
             msg = "No valid cells to select."
