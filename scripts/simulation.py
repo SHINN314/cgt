@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import matplotlib.pyplot as plt
 
 from config import RESULT_DIR
@@ -171,25 +173,68 @@ def simulate_square_chomp(
     plt.show()
 
 
-if __name__ == "__main__":
-    # 正方形盤面でシミュレーション
-    k: int = int(
-        input("比較する2xi Chompの最大iを入力してください(デフォルト: 10): ") or "10",
+def simulate_with_log() -> None:
+    """ログをつけながらシミュレーションを実行する関数"""
+    init_row: int = int(
+        input("盤面の行数を入力してください(デフォルト: 2): ") or "2",
+    )
+    init_col: int = int(
+        input("盤面の列数を入力してください(デフォルト: 2): ") or "2",
     )
     simulation_count: int = int(
         input("各盤面でのシミュレーション回数を入力してください(デフォルト: 10000): ")
         or "10000",
     )
-
     file_name: str = (
-        input(
-            "グラフを保存するファイル名を入力してください(デフォルト: theory_vs_simulation.png): ",  # noqa: E501
-        )
-        or "theory_vs_simulation.png"
+        input("ログを保存するファイル名を入力して下さい(デフォルト: simulation.log): ")
+        or "simulation.log"
     )
 
-    compare_theory_and_simulation(
-        k=k,
-        simulation_count=simulation_count,
-        file_name=file_name,
-    )
+    with Path.open(RESULT_DIR / file_name, mode="w") as f:
+        for _ in range(1, simulation_count + 1):
+            game: Chomp = Chomp(init_row, init_col)
+            next_player: Agent = Agent("先手プレイヤー")
+            prev_player: Agent = Agent("後手プレイヤー")
+            is_next_player_turn: bool = True
+            logs: list[
+                dict[str, str | int]
+            ] = []  # [{player_name: str, row: int, col: int}]
+
+            while game.is_empty_board() is False:
+                if is_next_player_turn:
+                    row, col = next_player.select_eat_cell(game)
+                    logs.append(
+                        {
+                            "player_name": next_player.name,
+                            "selected_row": row,
+                            "selected_col": col,
+                        },
+                    )
+                else:
+                    row, col = prev_player.select_eat_cell(game)
+                    logs.append(
+                        {
+                            "player_name": prev_player.name,
+                            "selected_row": row,
+                            "selected_col": col,
+                        },
+                    )
+                game.eat(row, col)
+                is_next_player_turn = not is_next_player_turn
+
+            # logの出力
+            for log in logs:
+                f.write(
+                    f"player_name: {log['player_name']}, selected_cell: ({log['selected_row']}, {log['selected_col']})\n",  # noqa: E501
+                )
+
+            # 勝者の出力
+            if is_next_player_turn:
+                f.write("winner: next_player\n")
+            else:
+                f.write("winner: prev_player\n")
+
+
+if __name__ == "__main__":
+    # ログのテスト
+    simulate_with_log()
