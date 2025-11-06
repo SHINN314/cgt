@@ -27,8 +27,8 @@ def simulate_game(simulation_count: int, board_rows: int, board_cols: int) -> fl
     print(
         f"Simulating {simulation_count} games on a {board_rows}x{board_cols} board...",
     )
-    agent1: Agent = Agent("エージェント1")
-    agent2: Agent = Agent("エージェント2")
+    agent1: Agent = Agent("エージェント1")  # 先手のプレイヤー
+    agent2: Agent = Agent("エージェント2")  # 後手のプレイヤー
     agent1_wins: int = 0
     agent2_wins: int = 0
 
@@ -36,7 +36,7 @@ def simulate_game(simulation_count: int, board_rows: int, board_cols: int) -> fl
         game: Chomp = Chomp(board_rows, board_cols)
         is_agent1_turn: bool = True
 
-        while not game.is_game_over():
+        while not game.is_empty_board():
             if is_agent1_turn:
                 row, col = agent1.select_eat_cell(game)
             else:
@@ -45,9 +45,9 @@ def simulate_game(simulation_count: int, board_rows: int, board_cols: int) -> fl
             is_agent1_turn = not is_agent1_turn
 
         if is_agent1_turn:
-            agent2_wins += 1
-        else:
             agent1_wins += 1
+        else:
+            agent2_wins += 1
 
     return agent1_wins / simulation_count
 
