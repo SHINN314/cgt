@@ -87,6 +87,13 @@ def calculate_probability(n: int, k: int) -> float:
         先手の勝率。
 
     """
+    if k == 0:
+        if n == 0:
+            return 1.0
+        if n == 1:
+            return 0.0
+        return 0.5
+
     recurrence_relation: np.ndarray = calculate_mutual_recurrence_relation(k)
     a_k: int = recurrence_relation[0]
     b_k: int = recurrence_relation[1]
@@ -112,6 +119,13 @@ def calculate_probability_fraction(n: int, k: int) -> Fraction:
         先手の勝率。
 
     """
+    if k == 0:
+        if n == 0:
+            return Fraction(1, 1)
+        if n == 1:
+            return Fraction(0, 1)
+        return Fraction(1, 2)
+
     recurrence_relation: np.ndarray = calculate_mutual_recurrence_relation(k)
     a_k: int = recurrence_relation[0]
     b_k: int = recurrence_relation[1]
