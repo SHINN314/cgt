@@ -1,4 +1,4 @@
-import random
+import numpy as np
 
 from src.chomp import Chomp
 
@@ -33,13 +33,16 @@ class Agent:
             選択されたセルの行と列のインデックス。
 
         """
-        valid_cells = [
-            (r, c)
-            for r in range(game.get_board_rows())
-            for c in range(game.get_board_cols())
-            if game.is_eatable_cell(r, c)
-        ]
-        if not valid_cells:
+        # 盤面からTrue(食べられる)セルの位置を取得
+        board = game.get_board()
+        valid_positions = np.argwhere(board)
+
+        if len(valid_positions) == 0:
             msg = "No valid cells to select."
             raise ValueError(msg)
-        return random.choice(valid_cells)
+
+        # ランダムに1つ選択
+        rng = np.random.default_rng()
+        idx = rng.integers(len(valid_positions))
+        row, col = valid_positions[idx]
+        return int(row), int(col)

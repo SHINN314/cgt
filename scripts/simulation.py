@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import matplotlib.pyplot as plt
+import numpy as np
 
 from config import RESULT_DIR
 from src.agent import Agent
@@ -77,27 +78,26 @@ def compare_theory_and_simulation(
         msg: str = "kは1以上の整数でなければなりません。"
         raise ValueError(msg)
 
-    # データを格納するリスト
-    i_values: list[int] = []
-    theory_values: list[float] = []
-    simulation_values: list[float] = []
+    # データを格納する配列
+    i_values = np.arange(1, k + 1)
+    theory_values = np.zeros(k)
+    simulation_values = np.zeros(k)
 
     # 各iについてシミュレーションと理論値を計算
-    for i in range(1, k + 1):
+    for idx, i in enumerate(i_values):
         print(f"i={i}/{k} を処理中...")
-        i_values.append(i)
 
         # 理論値の計算
-        theory_prob = calculate_probability(i, i)
-        theory_values.append(theory_prob)
+        theory_prob = calculate_probability(int(i), int(i))
+        theory_values[idx] = theory_prob
 
         # シミュレーション値の計算
         sim_prob = simulate_game(
             simulation_count=simulation_count,
             board_rows=2,
-            board_cols=i,
+            board_cols=int(i),
         )
-        simulation_values.append(sim_prob)
+        simulation_values[idx] = sim_prob
 
         print(f"  理論値: {theory_prob:.4f}, シミュレーション値: {sim_prob:.4f}")
 
@@ -152,19 +152,21 @@ def simulate_square_chomp() -> None:
     )
     file_name: str = (
         input(
-            "画像ファイルの名前を入力してください(デフォルト: square_chomp_simulation.png): ",  # noqa: E501
+            "画像ファイルの名前を入力してください(デフォルト: square_chomp_simulation_yyyymmdd_v.png): ",  # noqa: E501
         )
-        or "square_chomp_simulation.png"
+        or "square_chomp_simulation_yyyymmdd_v.png"
     )
-    ns: list[int] = list(range(1, max_edge_length + 1))
-    probabilities: list[float] = [
-        simulate_game(
-            simulation_count=simulate_count,
-            board_rows=edge_length,
-            board_cols=edge_length,
-        )
-        for edge_length in range(1, max_edge_length + 1)
-    ]
+    ns = np.arange(1, max_edge_length + 1)
+    probabilities = np.array(
+        [
+            simulate_game(
+                simulation_count=simulate_count,
+                board_rows=edge_length,
+                board_cols=edge_length,
+            )
+            for edge_length in range(1, max_edge_length + 1)
+        ],
+    )
     print(probabilities)  # デバッグ用出力
 
     plt.figure(figsize=(10, 6))
@@ -204,6 +206,7 @@ def simulate_with_log() -> None:
             logs: list[
                 dict[str, str | int]
             ] = []  # [{player_name: str, row: int, col: int}]
+            # Note: ログは辞書のリストなので、そのまま保持
 
             while game.is_empty_board() is False:
                 if is_next_player_turn:
