@@ -1,7 +1,7 @@
 from fractions import Fraction
 
 
-def calculate_3_row_probability(n1: int, n2: int, n3: int) -> Fraction:  # noqa: C901
+def calculate_three_row_probability(n1: int, n2: int, n3: int) -> Fraction:  # noqa: C901
     """3行のChomp盤面における確率を計算する関数
 
     Parameters
@@ -54,7 +54,7 @@ def calculate_3_row_probability(n1: int, n2: int, n3: int) -> Fraction:  # noqa:
         """
         # 基底条件
         if a == 0 and b == 0 and c == 0:
-            return Fraction(0)
+            return Fraction(1)
 
         # メモ化チェック
         if (a, b, c) in memo:
@@ -103,7 +103,7 @@ def calculate_3_row_probability(n1: int, n2: int, n3: int) -> Fraction:  # noqa:
 if __name__ == "__main__":
     # テスト
     print("3行Chomp確率計算のテスト")
-    print(f"f(1, 1, 1) = {calculate_3_row_probability(1, 1, 1)}")
-    print(f"f(2, 2, 2) = {calculate_3_row_probability(2, 2, 2)}")
-    print(f"f(3, 3, 3) = {calculate_3_row_probability(3, 3, 3)}")
-    print(f"f(3, 2, 1) = {calculate_3_row_probability(3, 2, 1)}")
+    print(f"f(1, 1, 1) = {calculate_three_row_probability(1, 1, 1)}")
+    print(f"f(2, 2, 2) = {calculate_three_row_probability(2, 2, 2)}")
+    print(f"f(3, 3, 3) = {calculate_three_row_probability(3, 3, 3)}")
+    print(f"f(3, 2, 1) = {calculate_three_row_probability(3, 2, 1)}")
