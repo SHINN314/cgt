@@ -100,6 +100,26 @@ def calculate_three_row_probability(n1: int, n2: int, n3: int) -> Fraction:  # n
     return f(n1, n2, n3)
 
 
+def is_multiple_number(prob: Fraction, n: int) -> bool:
+    """整数nがChompの確率の分母の倍数であるかを判定する関数。
+
+    Parameters
+    ----------
+    prob: Fraction
+        Chompの確率(分数形式)
+    n: int
+        判定したい整数
+
+    Returns
+    -------
+    bool
+        nが確率の分母の倍数であればTrue、そうでなければFalse
+
+    """
+    prob_denominator: int = prob.denominator
+    return n % prob_denominator == 0
+
+
 if __name__ == "__main__":
     # テスト
     print("3行Chomp確率計算のテスト")
