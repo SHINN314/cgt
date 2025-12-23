@@ -37,12 +37,18 @@ def calculate_3_row_probability(n1: int, n2: int, n3: int) -> Fraction:  # noqa:
     def f(a: int, b: int, c: int) -> Fraction:
         """内部関数: メモ化を用いた再帰計算
 
-        Args:
-            a: 1行目のマスの個数
-            b: 2行目のマスの個数
-            c: 3行目のマスの個数
+        Parameters
+        ----------
+        a: int
+            1行目のマスの個数
+        b: int
+            2行目のマスの個数
+        c: int
+            3行目のマスの個数
 
-        Returns:
+        Returns
+        -------
+        Fraction
             確率 (分数形式)
 
         """
