@@ -3,7 +3,7 @@ from fractions import Fraction
 import pytest
 
 from src.recurrence_relation import calculate_probability_fraction
-from src.three_times_n_prob import calculate_three_row_probability
+from src.three_rows_chomp_prob import calculate_three_row_probability
 
 
 class TestCalculateThreeRowProbability:
