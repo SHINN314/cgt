@@ -100,7 +100,7 @@ def calculate_three_row_probability(n1: int, n2: int, n3: int) -> Fraction:  # n
     return f(n1, n2, n3)
 
 
-def is_multiple_number(prob: Fraction, n: int) -> bool:
+def is_multiple_number(prob: Fraction, n: int, n_1: int, n_2: int, n_3: int) -> bool:
     """整数nがChompの確率の分母の倍数であるかを判定する関数。
 
     Parameters
@@ -108,22 +108,45 @@ def is_multiple_number(prob: Fraction, n: int) -> bool:
     prob: Fraction
         Chompの確率(分数形式)
     n: int
-        判定したい整数
+        積のループ回数
+    n_1: int
+        1行目のマスの個数
+    n_2: int
+        2行目のマスの個数
+    n_3: int
+        3行目のマスの個数
 
     Returns
     -------
     bool
         nが確率の分母の倍数であればTrue、そうでなければFalse
 
+    Raises
+    ------
+    ValueError
+        recurrence_denominatorが0になった場合
+
     """
-    prob_denominator: int = prob.denominator
-    return n % prob_denominator == 0
+    recurrence_denominator: int = 1
+    diffed_frac = Fraction(1, 2) - prob
+    diffed_denominator = diffed_frac.denominator
+
+    for i in range(n + 1):
+        recurrence_denominator *= n_1 + n_2 + n_3 - i
+
+    if recurrence_denominator == 0:
+        msg: str = "盤面を十分に大きくしてください"
+        raise ValueError(msg)
+
+    return recurrence_denominator % diffed_denominator == 0
 
 
 if __name__ == "__main__":
     # テスト
-    print("3行Chomp確率計算のテスト")
-    print(f"f(1, 1, 1) = {calculate_three_row_probability(1, 1, 1)}")
-    print(f"f(2, 2, 2) = {calculate_three_row_probability(2, 2, 2)}")
-    print(f"f(3, 3, 3) = {calculate_three_row_probability(3, 3, 3)}")
-    print(f"f(3, 2, 1) = {calculate_three_row_probability(3, 2, 1)}")
+    # ValueErrorが発生しないことの確認
+    prob_1 = calculate_three_row_probability(3, 2, 2)
+    print(is_multiple_number(prob_1, 3, 3, 2, 2))
+
+    # ValueErrorが発生することの確認
+    prob_2 = calculate_three_row_probability(1, 1, 1)
+    print(is_multiple_number(prob_2, 3, 1, 1, 1))
