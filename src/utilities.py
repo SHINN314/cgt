@@ -14,7 +14,10 @@ def sum_fraction_unnormalized(f: Fraction, g: Fraction) -> Fraction:
     """
     numerator = f.numerator * g.denominator + g.numerator * f.denominator
     denominator = f.denominator * g.denominator
-    return Fraction(numerator, denominator, normalize=False)
+    result: Fraction = Fraction.__new__(Fraction)
+    result._numerator = numerator  # noqa: SLF001
+    result._denominator = denominator  # noqa: SLF001
+    return result
 
 
 def sub_fraction_unnormalized(f: Fraction, g: Fraction) -> Fraction:
@@ -30,4 +33,7 @@ def sub_fraction_unnormalized(f: Fraction, g: Fraction) -> Fraction:
     """
     numerator = f.numerator * g.denominator - g.numerator * f.denominator
     denominator = f.denominator * g.denominator
-    return Fraction(numerator, denominator, normalize=False)
+    result: Fraction = Fraction.__new__(Fraction)
+    result._numerator = numerator  # noqa: SLF001
+    result._denominator = denominator  # noqa: SLF001
+    return result
