@@ -152,7 +152,7 @@ def calculate_three_row_probability_unnormalized(n1: int, n2: int, n3: int) -> F
         """
         # 基底条件
         if a == 0 and b == 0 and c == 0:
-            return Fraction(1, normalize=False)
+            return Fraction(1)
 
         # メモ化チェック
         if (a, b, c) in memo:
@@ -165,7 +165,6 @@ def calculate_three_row_probability_unnormalized(n1: int, n2: int, n3: int) -> F
         sum_value: Fraction = Fraction(
             sum_value_numerator,
             sum_value_denominator,
-            normalize=False,
         )
 
         # Σ(i=n2 to n1-1) f(i, n2, n3)
@@ -195,7 +194,7 @@ def calculate_three_row_probability_unnormalized(n1: int, n2: int, n3: int) -> F
         # 確率の計算
         result: Fraction = sub_fraction_unnormalized(
             Fraction(1),
-            Fraction(sum_value, total, normalize=False),
+            Fraction(sum_value, total),
         )
 
         # メモ化
@@ -248,10 +247,18 @@ def is_multiple_number(prob: Fraction, n: int, n_1: int, n_2: int, n_3: int) -> 
 
 if __name__ == "__main__":
     # テスト
-    # ValueErrorが発生しないことの確認
-    prob_1 = calculate_three_row_probability(3, 2, 2)
-    print(is_multiple_number(prob_1, 3, 3, 2, 2))
+    test_cases = [
+        (2, 1, 1),
+        (3, 2, 1),
+        (4, 2, 2),
+        (5, 3, 1),
+        (3, 3, 3),
+        (4, 3, 2),
+        (5, 4, 3),
+    ]
 
-    # ValueErrorが発生することの確認
-    prob_2 = calculate_three_row_probability(1, 1, 1)
-    print(is_multiple_number(prob_2, 3, 1, 1, 1))
+    for n1, n2, n3 in test_cases:
+        prob = calculate_three_row_probability(n1, n2, n3)
+        print(f"Chomp Probability for ({n1}, {n2}, {n3}): {prob}")
+        unnormalized_prob = calculate_three_row_probability_unnormalized(n1, n2, n3)
+        print(f"Unnormalized Probability for ({n1}, {n2}, {n3}): {unnormalized_prob}")
