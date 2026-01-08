@@ -1,6 +1,7 @@
 from fractions import Fraction
 
-from src.utilities import sub_fraction_unnormalized, sum_fraction_unnormalized
+from src.fraction.calculate_unnormalize_fraction import add_fraction, sub_fraction
+from src.fraction.unnormalize_fraction import UnnormalizeFraction
 
 
 def calculate_three_row_probability(n1: int, n2: int, n3: int) -> Fraction:
@@ -99,7 +100,11 @@ def calculate_three_row_probability(n1: int, n2: int, n3: int) -> Fraction:
     return f(n1, n2, n3)
 
 
-def calculate_three_row_probability_unnormalized(n1: int, n2: int, n3: int) -> Fraction:
+def calculate_three_row_probability_unnormalized(
+    n1: int,
+    n2: int,
+    n3: int,
+) -> UnnormalizeFraction:
     """3行のChomp盤面における正規化されていない確率を計算する関数
 
     Parameters
@@ -113,7 +118,7 @@ def calculate_three_row_probability_unnormalized(n1: int, n2: int, n3: int) -> F
 
     Returns
     -------
-    Fraction
+    UnnormalizeFraction
         正規化されていない確率 (分数形式)
 
     Notes
@@ -132,7 +137,7 @@ def calculate_three_row_probability_unnormalized(n1: int, n2: int, n3: int) -> F
     # メモ
     memo = {}
 
-    def f(a: int, b: int, c: int) -> Fraction:
+    def f(a: int, b: int, c: int) -> UnnormalizeFraction:
         """内部関数: メモ化を用いた再帰計算
 
         Parameters
@@ -146,13 +151,13 @@ def calculate_three_row_probability_unnormalized(n1: int, n2: int, n3: int) -> F
 
         Returns
         -------
-        Fraction
+        UnnormalizeFraction
             正規化されていない確率 (分数形式)
 
         """
         # 基底条件
         if a == 0 and b == 0 and c == 0:
-            return Fraction(1)
+            return UnnormalizeFraction(1, 1)
 
         # メモ化チェック
         if (a, b, c) in memo:
@@ -160,41 +165,36 @@ def calculate_three_row_probability_unnormalized(n1: int, n2: int, n3: int) -> F
 
         # 再帰式の計算
         total: int = a + b + c
-        sum_value_numerator: int = 0
-        sum_value_denominator: int = 1
-        sum_value: Fraction = Fraction(
-            sum_value_numerator,
-            sum_value_denominator,
-        )
+        sum_value: UnnormalizeFraction = UnnormalizeFraction(0, 1)
 
         # Σ(i=n2 to n1-1) f(i, n2, n3)
         for i in range(b, a):
-            sum_value = sum_fraction_unnormalized(sum_value, f(i, b, c))
+            sum_value = add_fraction(sum_value, f(i, b, c))
 
         # Σ(i=n3 to n2-1) f(i, i, n3)
         for i in range(c, b):
-            sum_value = sum_fraction_unnormalized(sum_value, f(i, i, c))
+            sum_value = add_fraction(sum_value, f(i, i, c))
 
         # Σ(i=0 to n3-1) f(i, i, i)
         for i in range(c):
-            sum_value = sum_fraction_unnormalized(sum_value, f(i, i, i))
+            sum_value = add_fraction(sum_value, f(i, i, i))
 
         # Σ(i=n3 to n2-1) f(n1, i, n3)
         for i in range(c, b):
-            sum_value = sum_fraction_unnormalized(sum_value, f(a, i, c))
+            sum_value = add_fraction(sum_value, f(a, i, c))
 
         # Σ(i=0 to n3-1) f(n1, i, i)
         for i in range(c):
-            sum_value = sum_fraction_unnormalized(sum_value, f(a, i, i))
+            sum_value = add_fraction(sum_value, f(a, i, i))
 
         # Σ(i=0 to n3-1) f(n1, n2, i)
         for i in range(c):
-            sum_value = sum_fraction_unnormalized(sum_value, f(a, b, i))
+            sum_value = add_fraction(sum_value, f(a, b, i))
 
         # 確率の計算
-        result: Fraction = sub_fraction_unnormalized(
-            Fraction(1),
-            Fraction(sum_value, total),
+        result: UnnormalizeFraction = sub_fraction(
+            UnnormalizeFraction(1, 1),
+            UnnormalizeFraction(sum_value.numerator, sum_value.denominator * total),
         )
 
         # メモ化
@@ -204,20 +204,23 @@ def calculate_three_row_probability_unnormalized(n1: int, n2: int, n3: int) -> F
     return f(n1, n2, n3)
 
 
-def is_multiple_number(prob: Fraction, n: int, n_1: int, n_2: int, n_3: int) -> bool:
+def is_multiple_number(
+    n: int,
+    n1: int,
+    n2: int,
+    n3: int,
+) -> bool:
     """整数nがChompの確率の分母の倍数であるかを判定する関数。
 
     Parameters
     ----------
-    prob: Fraction
-        Chompの確率(分数形式)
     n: int
         積のループ回数
-    n_1: int
+    n1: int
         1行目のマスの個数
-    n_2: int
+    n2: int
         2行目のマスの個数
-    n_3: int
+    n3: int
         3行目のマスの個数
 
     Returns
@@ -231,34 +234,51 @@ def is_multiple_number(prob: Fraction, n: int, n_1: int, n_2: int, n_3: int) -> 
         recurrence_denominatorが0になった場合
 
     """
-    recurrence_denominator: int = 1
-    diffed_frac = Fraction(1, 2) - prob
-    diffed_denominator = diffed_frac.denominator
+    recurrence_denominator: int = 1  # 理論式における再帰項の分母
+    prob: UnnormalizeFraction = calculate_three_row_probability_unnormalized(
+        n1,
+        n2,
+        n3,
+    )  # 再帰的に求めた確率
+    recurrence_term: UnnormalizeFraction = sub_fraction(
+        UnnormalizeFraction(1, 2),
+        prob,
+    )  # 再帰項
 
     for i in range(n + 1):
-        recurrence_denominator *= n_1 + n_2 + n_3 - i
+        recurrence_denominator *= n1 + n2 + n3 - i
 
     if recurrence_denominator == 0:
         msg: str = "盤面を十分に大きくしてください"
         raise ValueError(msg)
 
-    return recurrence_denominator % diffed_denominator == 0
+    return recurrence_term.denominator % recurrence_denominator == 0
 
 
 if __name__ == "__main__":
     # テスト
-    test_cases = [
-        (2, 1, 1),
-        (3, 2, 1),
-        (4, 2, 2),
-        (5, 3, 1),
-        (3, 3, 3),
-        (4, 3, 2),
-        (5, 4, 3),
+    test_cases = [  # (n1, n2, n3)
+        (2, 1, 0),
+        (3, 2, 0),
+        (4, 2, 0),
+        (5, 3, 0),
+        (3, 3, 0),
+        (4, 3, 0),
+        (5, 4, 0),
     ]
 
     for n1, n2, n3 in test_cases:
         prob = calculate_three_row_probability(n1, n2, n3)
         print(f"Chomp Probability for ({n1}, {n2}, {n3}): {prob}")
         unnormalized_prob = calculate_three_row_probability_unnormalized(n1, n2, n3)
-        print(f"Unnormalized Probability for ({n1}, {n2}, {n3}): {unnormalized_prob}")
+        print(
+            f"Unnormalized Probability for ({n1}, {n2}, {n3}): {unnormalized_prob.show_fraction()}",
+        )
+        if is_multiple_number(2, n1, n2, n3):
+            print(
+                f"prob for ({n1}, {n2}, {n3}) is multiple of recurrence denominator for n=2.",
+            )
+        else:
+            print(
+                f"prob for ({n1}, {n2}, {n3}) is NOT multiple of recurrence denominator for n=2.",
+            )
