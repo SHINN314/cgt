@@ -1,4 +1,4 @@
-from src.fraction.unnormalized_fraction import UnnormalizeFraction
+from src.fraction.unnormalize_fraction import UnnormalizeFraction
 
 
 def add_fraction(
