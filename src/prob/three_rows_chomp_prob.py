@@ -1,10 +1,10 @@
 from fractions import Fraction
 
-from src.fraction.calculate_unnormalize_fraction import add_fraction, sub_fraction
-from src.fraction.unnormalize_fraction import UnnormalizeFraction
+from src.prob.fraction.calculate_unnormalize_fraction import add_fraction, sub_fraction
+from src.prob.fraction.unnormalize_fraction import UnnormalizeFraction
 
 
-def calculate_three_row_probability(n1: int, n2: int, n3: int) -> Fraction:
+def calculate_three_rows_prob_fraction(n1: int, n2: int, n3: int) -> Fraction:
     """3行のChomp盤面における確率を計算する関数
 
     Parameters
@@ -100,7 +100,7 @@ def calculate_three_row_probability(n1: int, n2: int, n3: int) -> Fraction:
     return f(n1, n2, n3)
 
 
-def calculate_three_row_probability_unnormalized(
+def calculate_three_rows_prob_unnormalized_fraction(
     n1: int,
     n2: int,
     n3: int,

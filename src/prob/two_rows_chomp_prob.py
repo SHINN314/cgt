@@ -71,7 +71,7 @@ def calculate_mutual_recurrence_relation_fraction(k: int) -> Fraction:
     return recurrent_vector[0] / recurrent_vector[1]
 
 
-def calculate_probability(n: int, k: int) -> float:
+def calculate_two_rows_prob(n: int, k: int) -> float:
     """2行のChompにおいて一様ランダムに手を打ったときの先手の勝率を求める関数。
 
     Parameters
@@ -103,7 +103,7 @@ def calculate_probability(n: int, k: int) -> float:
     return winning_probability
 
 
-def calculate_probability_fraction(n: int, k: int) -> Fraction:
+def calculate_two_rows_prob_fraction(n: int, k: int) -> Fraction:
     """2行のChompにおいて一様ランダムに手を打ったときの先手の勝率を分数型で求める関数。
 
     Parameters

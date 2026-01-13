@@ -1,6 +1,6 @@
 import numpy as np
 
-from src.chomp import Chomp
+from src.game.chomp import Chomp
 
 
 class Agent:

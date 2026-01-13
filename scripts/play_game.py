@@ -1,4 +1,4 @@
-from src.chomp import Chomp
+from src.game.chomp import Chomp
 
 
 def play_game() -> None:
