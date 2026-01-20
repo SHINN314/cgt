@@ -235,7 +235,7 @@ def is_multiple_number(
 
     """
     recurrence_denominator: int = 1  # 理論式における再帰項の分母
-    prob: UnnormalizeFraction = calculate_three_row_probability_unnormalized(
+    prob: UnnormalizeFraction = calculate_three_rows_prob_unnormalized_fraction(
         n1,
         n2,
         n3,
@@ -253,32 +253,3 @@ def is_multiple_number(
         raise ValueError(msg)
 
     return recurrence_term.denominator % recurrence_denominator == 0
-
-
-if __name__ == "__main__":
-    # テスト
-    test_cases = [  # (n1, n2, n3)
-        (2, 1, 0),
-        (3, 2, 0),
-        (4, 2, 0),
-        (5, 3, 0),
-        (3, 3, 0),
-        (4, 3, 0),
-        (5, 4, 0),
-    ]
-
-    for n1, n2, n3 in test_cases:
-        prob = calculate_three_row_probability(n1, n2, n3)
-        print(f"Chomp Probability for ({n1}, {n2}, {n3}): {prob}")
-        unnormalized_prob = calculate_three_row_probability_unnormalized(n1, n2, n3)
-        print(
-            f"Unnormalized Probability for ({n1}, {n2}, {n3}): {unnormalized_prob.show_fraction()}",
-        )
-        if is_multiple_number(2, n1, n2, n3):
-            print(
-                f"prob for ({n1}, {n2}, {n3}) is multiple of recurrence denominator for n=2.",
-            )
-        else:
-            print(
-                f"prob for ({n1}, {n2}, {n3}) is NOT multiple of recurrence denominator for n=2.",
-            )
