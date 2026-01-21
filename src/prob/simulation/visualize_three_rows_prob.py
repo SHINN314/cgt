@@ -188,7 +188,7 @@ def batch_visualize_three_rows_prob_overlap_col(
         raise ValueError(msg)
 
     if output_file is None:
-        output_file = str(OUTPUT_DIR / "batch_three_rows_chomp_overlap.png")
+        output_file = str(OUTPUT_DIR / "batch_three_rows_chomp_overlap_col.png")
 
     # Create matplotlib subplots (1 row, multiple columns for each n2)
     cols = init_n2 + 1
@@ -206,6 +206,14 @@ def batch_visualize_three_rows_prob_overlap_col(
         n1: cmap(i / max(1, len(all_n1_values) - 1))
         for i, n1 in enumerate(all_n1_values)
     }
+
+    # Create legend handles for all n1 values
+    legend_handles = []
+    legend_labels = []
+    for n1 in all_n1_values:
+        (line,) = plt.plot([], [], "o-", linewidth=2, markersize=4, color=colors[n1])
+        legend_handles.append(line)
+        legend_labels.append(f"n1={n1}")
 
     for n2 in range(init_n2 + 1):
         ax = axes[n2]
@@ -228,7 +236,6 @@ def batch_visualize_three_rows_prob_overlap_col(
                 "o-",
                 linewidth=2,
                 markersize=4,
-                label=f"n1={n1}",
                 color=colors[n1],
             )
 
@@ -241,13 +248,22 @@ def batch_visualize_three_rows_prob_overlap_col(
         ax.set_xlabel("n3", fontsize=10)
         ax.set_ylabel("Prob", fontsize=10)
         ax.grid(True, alpha=0.3)
-        ax.legend(fontsize=8)
 
     fig.suptitle(
         "Three Rows Chomp Winning Probability - Overlap Visualization",
         fontsize=16,
     )
-    plt.tight_layout()
+    # Add a single shared legend on the right side of the figure
+    fig.legend(
+        legend_handles,
+        legend_labels,
+        loc="center right",
+        fontsize=8,
+        title="n1 values",
+        bbox_to_anchor=(0.98, 0.5),
+    )
+    # Adjust layout to make room for legend on the right
+    plt.tight_layout(rect=[0, 0, 0.92, 0.97])
     plt.savefig(output_file, dpi=150, bbox_inches="tight")
     plt.close()
     print(f"Overlap graph saved to {output_file}")
@@ -288,7 +304,7 @@ def batch_visualize_three_rows_prob_overlap_row(
 
     # Create matplotlib subplots (multiple rows, 1 column for each n1)
     rows = init_n1 + 1
-    fig, axes = plt.subplots(rows, 1, figsize=(6, rows * 3))
+    fig, axes = plt.subplots(rows, 1, figsize=(8, rows * 3))
 
     # Ensure axes is always iterable
     if rows == 1:
@@ -302,6 +318,14 @@ def batch_visualize_three_rows_prob_overlap_row(
         n2: cmap(i / max(1, len(all_n2_values) - 1))
         for i, n2 in enumerate(all_n2_values)
     }
+
+    # Create legend handles for all n2 values
+    legend_handles = []
+    legend_labels = []
+    for n2 in all_n2_values:
+        (line,) = plt.plot([], [], "o-", linewidth=2, markersize=4, color=colors[n2])
+        legend_handles.append(line)
+        legend_labels.append(f"n2={n2}")
 
     for n1 in range(init_n1 + 1):
         ax = axes[n1]
@@ -324,7 +348,6 @@ def batch_visualize_three_rows_prob_overlap_row(
                 "o-",
                 linewidth=2,
                 markersize=4,
-                label=f"n2={n2}",
                 color=colors[n2],
             )
 
@@ -337,13 +360,22 @@ def batch_visualize_three_rows_prob_overlap_row(
         ax.set_xlabel("n3", fontsize=10)
         ax.set_ylabel("Prob", fontsize=10)
         ax.grid(True, alpha=0.3)
-        ax.legend(fontsize=8)
 
     fig.suptitle(
         "Three Rows Chomp Winning Probability - Overlap Row Visualization",
         fontsize=16,
     )
-    plt.tight_layout()
+    # Add a single shared legend on the right side of the figure
+    fig.legend(
+        legend_handles,
+        legend_labels,
+        loc="center right",
+        fontsize=8,
+        title="n2 values",
+        bbox_to_anchor=(0.98, 0.5),
+    )
+    # Adjust layout to make room for legend on the right
+    plt.tight_layout(rect=[0, 0, 0.88, 0.97])
     plt.savefig(output_file, dpi=150, bbox_inches="tight")
     plt.close()
     print(f"Overlap row graph saved to {output_file}")
@@ -351,5 +383,5 @@ def batch_visualize_three_rows_prob_overlap_row(
 
 if __name__ == "__main__":
     # batch_visualize_three_rows_prob(20, 16, 12)
-    # batch_visualize_three_rows_prob_overlap_col(20, 16, 12)
-    batch_visualize_three_rows_prob_overlap_row(20, 16, 12)
+    batch_visualize_three_rows_prob_overlap_col(20, 16, 12)
+    # batch_visualize_three_rows_prob_overlap_row(20, 16, 12)
