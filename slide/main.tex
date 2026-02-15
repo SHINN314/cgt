@@ -1,0 +1,59 @@
+\documentclass[uplatex,dvipdfmx, 10pt, aspectratio=169]{beamer}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{latexsym}
+\usepackage{multirow}
+\usepackage{url}
+\usepackage[separate-uncertainty]{siunitx}
+\usepackage{physics}
+\usepackage{enumerate}
+\usepackage{bm}
+\usepackage{pdfpages}
+\usepackage{pxchfon}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{amsfonts}
+\usepackage{empheq}
+
+% tikz pakcage
+\usepackage{tikz}
+
+% theories package
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+% algorithm package
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+\usetheme[block=fill]{metropolis}
+
+% blcok layout
+\setbeamertemplate{blocks}[rounded][shadow=true]
+
+% title
+\title{タイトル}
+\author{2311081 木村 慎之介}
+\institute{電気通信大学 情報理工学域 Ⅰ類 コンピュータサイエンスプログラム 3年}
+\date{\today}
+
+% insert index at top of each section
+\AtBeginSection{
+    \begin{frame}{目次}
+        \tableofcontents[currentsection]
+    \end{frame}
+}
+
+% navigation var
+\setbeamertemplate{some beamer element}{square}
+
+\begin{document}
+\frame{\maketitle}
+
+% index
+\begin{frame}{目次}
+    \tableofcontents
+\end{frame}
+
+\end{document}
