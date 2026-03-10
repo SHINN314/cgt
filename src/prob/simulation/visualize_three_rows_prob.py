@@ -383,5 +383,15 @@ def batch_visualize_three_rows_prob_overlap_row(
 
 if __name__ == "__main__":
     # batch_visualize_three_rows_prob(20, 16, 12)
-    batch_visualize_three_rows_prob_overlap_col(20, 16, 12)
-    # batch_visualize_three_rows_prob_overlap_row(20, 16, 12)
+    # batch_visualize_three_rows_prob_overlap_col(
+    #     40,
+    #     32,
+    #     24,
+    #     OUTPUT_DIR / "three_rows_chomp_overlap_col_big.png",
+    # )
+    batch_visualize_three_rows_prob_overlap_row(
+        40,
+        32,
+        24,
+        OUTPUT_DIR / "batch_three_rows_chomp_overlap_row_big.png",
+    )
