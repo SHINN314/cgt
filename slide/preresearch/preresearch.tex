@@ -1,0 +1,44 @@
+\section{先行研究}
+\begin{frame}{先行研究}
+    先行研究\cite{ramdom_combinatorial_game_theory}ではプレイヤーがランダムに手を進めるような状況をモデル化し、そのモデル化における一部の初期盤面に対する先手の勝率が解析された。
+\end{frame}
+
+\begin{frame}{先行研究}
+    \begin{block}{モデル化}
+        各プレイヤーは、与えられた盤面から一様ランダムにマスを選択する。
+        このとき、盤面\(B\)における先手の勝率\(P(B)\)は以下のように再帰的に求まる。
+        \begin{equation}
+            P(B) = 1 - \frac{1}{|B|} \sum_{B \rightarrow C} P(C)
+        \end{equation}
+        ここで\(B \rightarrow C\)とは、盤面\(C\)は盤面\(B\)から1手で遷移されることを、\(|B|\)は盤面\(B\)のマスの数を表す。
+    \end{block}
+\end{frame}
+
+\begin{frame}{先行研究}
+    \begin{block}{盤面が1行の場合の先手の勝率}
+        盤面が1行の場合、先手の勝率\(P(B)\)は次のように求まる。
+        \begin{equation}
+            P(B) = \left\{
+                \begin{aligned}
+                    & 1 \ (|B| = 0) \\
+                    & 0 \ (|B| = 1) \\
+                    & \frac{1}{2} \ (|B| \geq 2)
+                \end{aligned}
+            \right.
+        \end{equation}
+    \end{block}
+\end{frame}
+
+\begin{frame}{先行研究}
+    \begin{block}{盤面が2行の場合の先手の勝率}
+        盤面が2行の場合、上から1行目のマスの数を\(n\)、2行目のマスの数を\(k \ (k \leq n)\)としたとき、先手の勝率は以下のように再帰的に求めることができる。
+        \begin{equation}
+            P(n, k) = \frac{1}{2} - \frac{n \alpha_k + \beta_k}{\left(2\left(k - 1\right)\right)! \cdot \left(n + k\right)\left(n + k - 1\right)\left(n + k - 2\right)}
+        \end{equation}
+        ただし、\(\alpha_k, \beta_k\)は初期値を\(\alpha_1 = 1, \beta_1 = -1\)とする次の漸化式で表される。
+        \begin{align}
+            & \alpha_{k + 1} = \left(4k^2 + k\right)\alpha_k + \beta_k \\
+            & \beta_{k + 1} = -k\left(k + 1\right)\alpha_k + \left(4k^2 -k -1\right)\beta_k
+        \end{align}
+    \end{block}
+\end{frame}
